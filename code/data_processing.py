@@ -33,29 +33,40 @@ def split_data(x, y, ratio, seed=1):
     return train_x, train_y, test_x, test_y
 
 
-def preprocessing(features, labels, col=True, row=False, ratio=0.7):
-    # deleting all features (=coloums) with missing values
-    if col:
+def preprocessing(features, labels, dtype = 'mean', ratio = 0.7):
+    
+    #deleting all features (=coloums) with missing values
+    if dtype == 'col':
         idx = np.where(features == -999)[1]
         processed_f = np.delete(features, idx, 1)
         processed_l = labels
-
-    # deleting all rows with missing values
-    elif row:
+    
+    #deleting all rows with missing values
+    elif dtype == 'row':
         idx = np.where(features == -999)[0]
         processed_f = np.delete(features, idx, 0)
-        processed_l = np.delete(labels, idx, 0)
-
-    # standardize each feature
+        processed_l = np.delete(labels, idx, 0)   
+    
+    #replace all missing values by the coloum-mean of the remaining values
+    elif dtype == 'mean':
+        processed_f = features.copy()
+        processed_f[processed_f == -999] = np.nan
+        means = np.nanmean(processed_f, axis = 0)
+        idx = np.where(np.isnan(processed_f))
+        processed_f[idx] = np.take(means, idx[1]) 
+        processed_l = labels
+      
+    
+    #standardize each feature 
     processed_f, mean_f, std_f = standardize(processed_f)
-
-    # split the data into a training and test set
+    
+    #split the data into a training and test set
     train_x, train_y, test_x, test_y = split_data(processed_f, processed_l, ratio, seed=1)
-
-    # build train- and testmodel (feature matrix tx, label vector y)
+    
+    #build train- and testmodel (feature matrix tx, label vector y)
     train_y, train_tx = build_model_data(train_x, train_y)
-    test_y, test_tx = build_model_data(test_x, test_y)
-
+    test_y, test_tx = build_model_data(test_x, test_y) 
+           
     return train_tx, train_y, test_tx, test_y
 
 
