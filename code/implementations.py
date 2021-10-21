@@ -75,14 +75,68 @@ def ridge_regression(y, tx, lambda_=0.1):
 
 
 # Logistic regression using gradient descent or SGD
+def sigmoid(t):
+    """apply the sigmoid function on t."""
+    return 1./(1 + np.exp(-t))
+
+def calculate_sigmoid_loss(y, tx, w):
+    """compute the loss: negative log likelihood."""
+    sig = sigmoid(tx.dot(w))
+    term1 = (-1)*y.T.dot(np.log(sig))
+    term2 = (-1)*(1 - y).T.dot(np.log(1 - sig))
+    return term1 + term2
+
+def calculate_sigmoid_gradient(y, tx, w):
+    """compute the gradient of loss."""
+    sig = sigmoid(tx.dot(w))
+    return tx.T.dot(sig - y)
+
+def calculate_sigmoid_hessian(y, tx, w):
+    """return the Hessian of the loss function."""
+    sig = sigmoid(tx.dot(w))
+    S = np.diag(sig.ravel()*(1-sig.ravel()))
+    return tx.T.dot(S).dot(tx)
+
+def help_logistic_regression(y, tx, w):
+    """return the loss, gradient, and Hessian."""
+    loss = calculate_sigmoid_loss(y, tx, w)
+    gradient = calculate_sigmoid_gradient(y, tx, w)
+    hessian = calculate_sigmoid_hessian(y, tx, w)
+    return loss, gradient, hessian
+
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
-    w = None
-    loss = None
+    w = initial_w
+    # Apply gradient descent over max_iters iteration
+    for n_iter in range(max_iters):
+        # Compute gradient and loss
+        gradient = calculate_sigmoid_gradient(y, tx, w)
+        # Update w by gradient
+        w = w - gamma * gradient
+
+    # Compute loss of last w value
+    loss = calculate_sigmoid_loss(y, tx, w)
+    
     return w, loss
 
 
 # Regularized logistic regression using gradient descent or SGD
+def help_penalized_logistic_regression(y, tx, w, lambda_):
+    """return the loss, gradient"""
+    loss = calculate_sigmoid_loss(y, tx, w) + lambda_ * np.linalg.norm(w, 2)**2
+    gradient = calculate_sigmoid_gradient(y, tx, w) + 2*lambda_*w
+    hessian = calculate_sigmoid_hessian(y, tx, w) + 2*lambda_
+    return loss, gradient, hessian
+
 def reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma):
-    w = None
-    loss = None
+    w = initial_w
+    # Apply gradient descent over max_iters iteration
+    for n_iter in range(max_iters):
+        # Compute gradient and loss
+        gradient = calculate_sigmoid_gradient(y, tx, w) + 2*lambda_*w
+        # Update w by gradient
+        w = w - gamma * gradient
+
+    # Compute loss of last w value
+    loss = calculate_sigmoid_loss(y, tx, w) + lambda_ * np.linalg.norm(w, 2)**2
+    
     return w, loss
