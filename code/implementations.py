@@ -1,7 +1,7 @@
 import numpy as np
 
 from helpers import compute_gradient, compute_loss, \
-    calculate_sigmoid_gradient, calculate_sigmoid_loss
+    calculate_sigmoid_gradient, calculate_sigmoid_loss, batch_iter
 
 
 # Linear regression using gradient descent
@@ -22,16 +22,13 @@ def least_squares_GD(y, tx, initial_w, max_iters, gamma):
 # Linear regression using stochastic gradient descent
 def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     w = initial_w
+    batch_size = 1
     for n_iter in range(max_iters):
-        # Pick mini-batch
-        data_size = len(y)
-        sample_index = np.random.randint(0, data_size)
-        minibatch_y = y[sample_index:sample_index+1]
-        minibatch_tx = tx[sample_index:sample_index+1, :]
-        # Compute SG and loss
-        stoch_gradient = compute_gradient(minibatch_y, minibatch_tx, w)
-        # Update w by stochastic gradient
-        w = w - gamma * stoch_gradient
+        for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size):
+            # Compute SG
+            stoch_gradient = compute_gradient(minibatch_y, minibatch_tx, w)
+            # Update w by stochastic gradient
+            w = w - gamma * stoch_gradient
 
     # Compute loss of last w value
     loss = compute_loss(y, tx, w)
