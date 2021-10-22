@@ -1,27 +1,7 @@
 import numpy as np
 
-
-# Functions for the calculation of the loss
-def calculate_mse(e):
-    return 1 / 2 * np.mean(e ** 2)
-
-
-def calculate_mae(e):
-    return np.mean(np.abs(e))
-
-
-def compute_loss(y, tx, w):
-    e = y - tx.dot(w)
-    return calculate_mse(e)
-
-
-# Compute gradient and error vector
-def compute_gradient(y, tx, w):
-    e = y - tx.dot(w)
-    n = len(y)
-
-    gradient = -1 / n * tx.T.dot(e)
-    return gradient, e
+from helpers import compute_gradient, compute_loss, \
+    calculate_sigmoid_gradient, calculate_sigmoid_loss
 
 
 # Linear regression using gradient descent
@@ -75,35 +55,6 @@ def ridge_regression(y, tx, lambda_=0.1):
 
 
 # Logistic regression using gradient descent or SGD
-def sigmoid(t):
-    """apply the sigmoid function on t."""
-    return 1./(1 + np.exp(-t))
-
-def calculate_sigmoid_loss(y, tx, w):
-    """compute the loss: negative log likelihood."""
-    sig = sigmoid(tx.dot(w))
-    term1 = (-1)*y.T.dot(np.log(sig))
-    term2 = (-1)*(1 - y).T.dot(np.log(1 - sig))
-    return term1 + term2
-
-def calculate_sigmoid_gradient(y, tx, w):
-    """compute the gradient of loss."""
-    sig = sigmoid(tx.dot(w))
-    return tx.T.dot(sig - y)
-
-def calculate_sigmoid_hessian(y, tx, w):
-    """return the Hessian of the loss function."""
-    sig = sigmoid(tx.dot(w))
-    S = np.diag(sig.ravel()*(1-sig.ravel()))
-    return tx.T.dot(S).dot(tx)
-
-def help_logistic_regression(y, tx, w):
-    """return the loss, gradient, and Hessian."""
-    loss = calculate_sigmoid_loss(y, tx, w)
-    gradient = calculate_sigmoid_gradient(y, tx, w)
-    hessian = calculate_sigmoid_hessian(y, tx, w)
-    return loss, gradient, hessian
-
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
     w = initial_w
     # Apply gradient descent over max_iters iteration
@@ -120,13 +71,6 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
 
 
 # Regularized logistic regression using gradient descent or SGD
-def help_penalized_logistic_regression(y, tx, w, lambda_):
-    """return the loss, gradient"""
-    loss = calculate_sigmoid_loss(y, tx, w) + lambda_ * np.linalg.norm(w, 2)**2
-    gradient = calculate_sigmoid_gradient(y, tx, w) + 2*lambda_*w
-    hessian = calculate_sigmoid_hessian(y, tx, w) + 2*lambda_
-    return loss, gradient, hessian
-
 def reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma):
     w = initial_w
     # Apply gradient descent over max_iters iteration
