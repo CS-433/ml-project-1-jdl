@@ -70,7 +70,10 @@ def compute_loss(y, tx, w):
 # Functions used fo the logistic regression
 def sigmoid(t):
     """apply the sigmoid function on t."""
-    return 1./(1 + np.exp(-t))
+    tt = t.copy()
+    tt[tt < -100] = -100
+    tt[tt > 19] = 19
+    return 1./(1 + np.exp(-tt))
 
 
 def calculate_sigmoid_loss(y, tx, w):
