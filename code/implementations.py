@@ -1,6 +1,6 @@
 import numpy as np
 
-from helpers import compute_gradient, compute_loss, \
+from proj1_helpers import compute_gradient, compute_loss, \
     calculate_sigmoid_gradient, calculate_sigmoid_loss, batch_iter
 
 

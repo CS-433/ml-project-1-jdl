@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from helpers import compute_loss
+from proj1_helpers import compute_loss
 
 from implementations import least_squares_GD, least_squares_SGD, \
     ridge_regression, logistic_regression, reg_logistic_regression

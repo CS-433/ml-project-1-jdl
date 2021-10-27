@@ -3,9 +3,9 @@ import numpy as np
 from implementations import (least_squares_GD, least_squares_SGD,
                              least_squares, ridge_regression,
                              logistic_regression, reg_logistic_regression)
-from helpers import load_data
-from data_processing import preprocessing, correctness, standardize, \
+from data_processing import preprocessing, standardize, \
     build_model_data
+from proj1_helpers import load_csv_data, correctness
 
 
 '''Build model using x method'''
