@@ -131,3 +131,6 @@ dmypy.json
 # Config files
 .idea/
 .DS_Store
+
+# Downloaded files
+data/test.csv
