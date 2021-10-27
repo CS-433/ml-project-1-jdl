@@ -113,20 +113,17 @@ def preprocessing(x, y, test_x, test_y, dtype = 'mean', ratio = 0.7):
     return train_tx, train_y, val_tx, val_y, test_tx, test_y
 
 
-def correctness(train_tx, train_y, test_tx, test_y, weights):
+def correctness(train_tx, train_y, val_tx, val_y, weights, print_ = True):
     # Make predictions
-    train_pred = train_tx.dot(weights)
-    test_pred = test_tx.dot(weights)
-
-    # Transform the prediction into 0 ( = 's') and 1 (= 'b')
-    train_pred = np.where(train_pred > 0.5, 1, 0)
-    test_pred = np.where(test_pred > 0.5, 1, 0)
+    train_pred = predict_labels(weights, train_tx)
+    val_pred = predict_labels(weights, val_tx)
 
     # Compute the ratio of correct labled predictions
     train_score = np.sum(np.where(train_pred == train_y, 1, 0)) / len(train_pred)
-    test_score = np.sum(np.where(test_pred == test_y, 1, 0)) / len(test_pred)
+    val_score = np.sum(np.where(val_pred == val_y, 1, 0)) / len(val_pred)
 
-    print("There are {train_s}% correct prediction in the training set".format(train_s=train_score * 100))
-    print("There are {test_s}% correct prediction in the test set".format(test_s=test_score * 100))
+    if print_:
+        print("There are {train_s}% correct prediction in the training set".format(train_s=train_score * 100))
+        print("There are {val_s}% correct prediction in the validation set".format(val_s=val_score * 100))
 
-    return train_score, test_score
+    return train_score, val_score
