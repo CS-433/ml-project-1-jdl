@@ -5,7 +5,7 @@ from implementations import (least_squares_GD, least_squares_SGD,
                              logistic_regression, reg_logistic_regression)
 from data_processing import preprocessing, standardize, \
     build_model_data
-from proj1_helpers import load_csv_data, correctness
+from proj1_helpers import load_csv_data, accuracy
 
 
 '''Build model using x method'''
