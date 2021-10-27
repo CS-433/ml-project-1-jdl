@@ -26,7 +26,7 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     for n_iter in range(max_iters):
         for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size):
             # Compute SG
-            stoch_gradient = compute_gradient(minibatch_y, minibatch_tx, w)
+            stoch_gradient, _ = compute_gradient(minibatch_y, minibatch_tx, w)
             # Update w by stochastic gradient
             w = w - gamma * stoch_gradient
 
