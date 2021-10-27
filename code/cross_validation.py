@@ -28,8 +28,8 @@ def cross_validation(y, tx, k_indices, k, lambda_):
     # choose desired method
     weights, _ = ridge_regression(y_tr, tx_tr, lambda_)
     # calculate the loss for train and test data
-    loss_tr = compute_loss(y_tr, tx_tr, weights)
-    loss_te = compute_loss(y_te, tx_te, weights)
+    loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
+    loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
     return loss_tr, loss_te
 
 
