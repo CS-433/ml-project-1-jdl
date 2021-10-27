@@ -53,7 +53,7 @@ def compute_gradient(y, tx, w):
     e = y - tx.dot(w)
     n = len(y)
 
-    gradient = -1 / n * tx.T.dot(e)
+    gradient = -tx.T.dot(e) / n
     return gradient, e
 
 
@@ -137,7 +137,7 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
             yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
 
 
-def correctness(train_tx, train_y, val_tx, val_y, weights, print_ = True):
+def accuracy(train_tx, train_y, val_tx, val_y, weights, print_ = True):
     # Make predictions
     train_pred = predict_labels(weights, train_tx)
     val_pred = predict_labels(weights, val_tx)
