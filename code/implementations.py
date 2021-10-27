@@ -77,7 +77,10 @@ def ridge_regression(y, tx, lambda_=0.1):
 # Logistic regression using gradient descent or SGD
 def sigmoid(t):
     """apply the sigmoid function on t."""
-    return 1./(1 + np.exp(-t))
+    tt = t.copy()
+    tt[tt < -100] = -100
+    tt[tt > 19] = 19
+    return 1./(1 + np.exp(-tt))
 
 def calculate_sigmoid_loss(y, tx, w):
     """compute the loss: negative log likelihood."""
