@@ -1,4 +1,4 @@
-# ML_project1
+# CS-433 - Project 1
 
 ## TO DO
 <ul>
@@ -10,4 +10,4 @@
     <li>comment code</li>
 </ul>
 
-
+## Code description
