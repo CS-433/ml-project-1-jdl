@@ -110,3 +110,22 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
         end_index = min((batch_num + 1) * batch_size, data_size)
         if start_index != end_index:
             yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
+
+
+def correctness(train_tx, train_y, test_tx, test_y, weights):
+    # Make predictions
+    train_pred = train_tx.dot(weights)
+    test_pred = test_tx.dot(weights)
+
+    # Transform the prediction into 0 ( = 's') and 1 (= 'b')
+    train_pred = np.where(train_pred > 0.5, 1, 0)
+    test_pred = np.where(test_pred > 0.5, 1, 0)
+
+    # Compute the ratio of correct labeled predictions
+    train_score = np.sum(np.where(train_pred == train_y, 1, 0)) / len(train_pred)
+    test_score = np.sum(np.where(test_pred == test_y, 1, 0)) / len(test_pred)
+
+    print("There are {train_s}% correct prediction in the training set".format(train_s=train_score * 100))
+    print("There are {test_s}% correct prediction in the test set".format(test_s=test_score * 100))
+
+    return train_score, test_score
