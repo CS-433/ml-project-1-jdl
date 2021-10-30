@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from proj1_helpers import compute_loss, accuracy
+from proj1_helpers import compute_loss, calculate_sigmoid_loss, accuracy
 
 from implementations import least_squares_GD, least_squares_SGD, \
     ridge_regression, logistic_regression, reg_logistic_regression
@@ -100,8 +100,8 @@ def cv_reg_logistic_regression(y, tx, k_indices, k, lambda_, max_iters, gamma):
     # choose desired method
     weights, _ = reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma)
     # calculate the loss for train and test data
-    loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
-    loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
+    loss_tr = np.sqrt(2 * calculate_sigmoid_loss(y_tr, tx_tr, weights))
+    loss_te = np.sqrt(2 * calculate_sigmoid_loss(y_te, tx_te, weights))
     # calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
