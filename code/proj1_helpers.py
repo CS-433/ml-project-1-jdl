@@ -154,3 +154,30 @@ def accuracy(train_tx, train_y, val_tx, val_y, weights, print_ = True):
         print("There are {val_s}% correct prediction in the validation set".format(val_s=val_score * 100))
 
     return train_score, val_score
+
+#Functions to expand features to polynomials
+def build_poly_tx(tx, idx, degree):
+    """polynomial basis functions for input data x, for j=0 up to j=degree."""
+    if degree == 0:
+        return np.delete(tx, idx, axis = 1)
+    elif degree == 1:
+        return tx
+    else:
+        new_tx = tx.copy()
+        new_tx = np.delete(new_tx, idx, axis = 1)
+        for i in idx:
+            poly = np.power(tx[:,i], 1)
+            for deg in range(2, degree+1):
+                poly = np.c_[poly, np.power(tx[:,i], deg)]
+            new_tx = np.hstack((new_tx, poly))
+        return new_tx
+    
+def build_final_poly_tx(tx, best_degrees):
+    """xxx"""
+    new_tx = np.ones((len(tx[:,0]),1))
+    for i, degree in enumerate(best_degrees):
+        poly = np.power(tx[:,i+1], 1)
+        for deg in range(2, degree+1):
+            poly = np.c_[poly, np.power(tx[:,i+1], deg)]
+        new_tx = np.c_[new_tx, poly]
+    return new_tx

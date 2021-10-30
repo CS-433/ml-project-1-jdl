@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from proj1_helpers import compute_loss, calculate_sigmoid_loss, accuracy
+from proj1_helpers import compute_loss, calculate_sigmoid_loss, accuracy, build_poly_tx
 
-from implementations import least_squares_GD, least_squares_SGD, \
+from implementations import least_squares, least_squares_GD, least_squares_SGD, \
     ridge_regression, logistic_regression, reg_logistic_regression
 
 
@@ -131,3 +131,20 @@ def cross_validation_gamma_visualization(gams, mse_tr, mse_te):
     plt.legend(loc=2)
     plt.grid(True)
     plt.savefig("cross_validation_gamma")
+    
+def cv_polynomial_expansion(y, tx, k_indices, k, idx, degree):
+    # get k'th subgroup in test, others in train
+    tx_tr = np.delete(tx, k_indices[k], axis=0)
+    y_tr = np.delete(y, k_indices[k])
+    tx_te = tx[k_indices[k]]
+    y_te = y[k_indices[k]]
+    
+    new_tx_tr = build_poly_tx(tx_tr, idx, degree)
+    new_tx_te = build_poly_tx(tx_te, idx, degree)
+    
+    weights, loss = least_squares(y_tr, new_tx_tr)
+    loss_tr = np.sqrt(2 * compute_loss(y_tr, new_tx_tr, weights))
+    loss_te = np.sqrt(2 * compute_loss(y_te, new_tx_te, weights))
+    acc_tr, acc_te = accuracy(new_tx_tr, y_tr, new_tx_te, y_te, weights, print_= False)
+              
+    return loss_tr, loss_te, acc_tr, acc_te
