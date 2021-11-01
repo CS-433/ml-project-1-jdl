@@ -62,17 +62,17 @@ def cv_GD(y, tx, k_indices, k, max_iters, gamma):
         accuracy (train and test)
     """
     initial_w = np.ones(len(tx[0])) * 0.1
-    # get k'th subgroup in test, others in train
+    # Get k'th subgroup in test, others in train
     tx_tr = np.delete(tx, k_indices[k], axis=0)
     y_tr = np.delete(y, k_indices[k])
     tx_te = tx[k_indices[k]]
     y_te = y[k_indices[k]]
-    # choose desired method
+    # Choose desired method (Gradient Descent)
     weights, _ = least_squares_GD(y, tx, initial_w, max_iters, gamma)
-    # calculate the loss for train and test data
+    # Calculate the loss for train and test data
     loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
     loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
-    # calculate accuracy
+    # Calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
 
@@ -106,17 +106,17 @@ def cv_SGD(y, tx, k_indices, k, max_iters, gamma):
         accuracy (train and test)
     """
     initial_w = np.ones(len(tx[0])) * 0.1
-    # get k'th subgroup in test, others in train
+    # Get k'th subgroup in test, others in train
     tx_tr = np.delete(tx, k_indices[k], axis=0)
     y_tr = np.delete(y, k_indices[k])
     tx_te = tx[k_indices[k]]
     y_te = y[k_indices[k]]
-    # choose desired method
+    # Choose desired method (Stochastic Gradient Descent)
     weights, _ = least_squares_SGD(y, tx, initial_w, max_iters, gamma)
-    # calculate the loss for train and test data
+    # Calculate the loss for train and test data
     loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
     loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
-    # calculate accuracy
+    # Calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
 
@@ -147,17 +147,17 @@ def cv_ridge_regression(y, tx, k_indices, k, lambda_):
     acc : float array
         accuracy (train and test)
     """
-    # get k'th subgroup in test, others in train
+    # Get k'th subgroup in test, others in train
     tx_tr = np.delete(tx, k_indices[k], axis=0)
     y_tr = np.delete(y, k_indices[k])
     tx_te = tx[k_indices[k]]
     y_te = y[k_indices[k]]
-    # choose desired method
+    # Choose desired method (ridge regression)
     weights, _ = ridge_regression(y_tr, tx_tr, lambda_)
-    # calculate the loss for train and test data
+    # Calculate the loss for train and test data
     loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
     loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
-    # calculate accuracy
+    # Calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
 
@@ -191,17 +191,17 @@ def cv_logistic_regression(y, tx, k_indices, k, max_iters, gamma):
         accuracy (train and test)
     """
     initial_w = np.ones(len(tx[0])) * 0.1
-    # get k'th subgroup in test, others in train
+    # Get k'th subgroup in test, others in train
     tx_tr = np.delete(tx, k_indices[k], axis=0)
     y_tr = np.delete(y, k_indices[k])
     tx_te = tx[k_indices[k]]
     y_te = y[k_indices[k]]
-    # choose desired method
+    # Choose desired method (logistic regression)
     weights, _ = logistic_regression(y, tx, initial_w, max_iters, gamma)
-    # calculate the loss for train and test data
+    # Calculate the loss for train and test data
     loss_tr = np.sqrt(2 * compute_loss(y_tr, tx_tr, weights))
     loss_te = np.sqrt(2 * compute_loss(y_te, tx_te, weights))
-    # calculate accuracy
+    # Calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
 
@@ -237,45 +237,20 @@ def cv_reg_logistic_regression(y, tx, k_indices, k, lambda_, max_iters, gamma):
         accuracy (train and test)
     """
     initial_w = np.ones(len(tx[0])) * 0.1
-    # get k'th subgroup in test, others in train
+    # Get k'th subgroup in test, others in train
     tx_tr = np.delete(tx, k_indices[k], axis=0)
     y_tr = np.delete(y, k_indices[k])
     tx_te = tx[k_indices[k]]
     y_te = y[k_indices[k]]
-    # choose desired method
+    # Choose desired method (regularised logistic regression)
     weights, _ = reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma)
-    # calculate the loss for train and test data
+    # Calculate the loss for train and test data
     loss_tr = np.sqrt(2 * calculate_sigmoid_loss(y_tr, tx_tr, weights))
     loss_te = np.sqrt(2 * calculate_sigmoid_loss(y_te, tx_te, weights))
-    # calculate accuracy
+    # Calculate accuracy
     acc = accuracy(tx_tr, y_tr, tx_te, y_te, weights, print_=False)
     return loss_tr, loss_te, acc
 
-
-# def cross_validation_lambda_visualization(lambds, mse_tr, mse_te):
-#     """visualization the curves of mse_tr and mse_te."""
-#     plt.semilogx(lambds, mse_tr, marker=".", color='b', label='train error')
-#     plt.semilogx(lambds, mse_te, marker=".", color='r', label='test error')
-#     plt.xlabel("lambda")
-#     plt.ylabel("rmse")
-#     plt.xlim(1e-4, 1)
-#     plt.title("cross validation lambda")
-#     plt.legend(loc=2)
-#     plt.grid(True)
-#     plt.savefig("cross_validation_lambda")
-
-
-# def cross_validation_gamma_visualization(gams, mse_tr, mse_te):
-#     """visualization the curves of mse_tr and mse_te."""
-#     plt.semilogx(gams, mse_tr, marker=".", color='b', label='train error')
-#     plt.semilogx(gams, mse_te, marker=".", color='r', label='test error')
-#     plt.xlabel("lambda")
-#     plt.ylabel("rmse")
-#     #plt.xlim(1e-4, 1)
-#     plt.title("cross validation gamma")
-#     plt.legend(loc=2)
-#     plt.grid(True)
-#     plt.savefig("cross_validation_gamma")
     
 def cv_polynomial_expansion(y, tx, k_indices, k, idx, degree):
     """

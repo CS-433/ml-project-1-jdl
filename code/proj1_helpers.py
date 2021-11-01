@@ -154,7 +154,6 @@ def compute_loss(y, tx, w):
     return loss
 
 
-# Functions used fo the logistic regression
 def sigmoid(t):
     """
     Apply sigmoid function.
@@ -166,12 +165,14 @@ def sigmoid(t):
 
     Returns
     -------
-    sigmoid function
+    sig : float array
+        sigmoid function
     """
     tt = t.copy()
     tt[tt < -100] = -100
     tt[tt > 19] = 19
-    return 1./(1 + np.exp(-tt))
+    sig = 1./(1 + np.exp(-tt))
+    return sig
 
 
 def calculate_sigmoid_loss(y, tx, w):
@@ -339,9 +340,12 @@ def build_poly_tx(tx, idx, degree):
     else:
         new_tx = tx.copy()
         new_tx = np.delete(new_tx, idx, axis=1)
+        # Loop over all features whose index is in idx
         for i in idx:
+            # Initiate with degree 1
             poly = np.power(tx[:, i], 1)
             for deg in range(2, degree+1):
+                # Compute each degree
                 poly = np.c_[poly, np.power(tx[:, i], deg)]
             new_tx = np.hstack((new_tx, poly))
         return new_tx
@@ -365,9 +369,12 @@ def build_final_poly_tx(tx, best_degrees):
         feature matrix with polynomial expansion
     """
     new_tx = np.ones((len(tx[:, 0]), 1))
+    # Loop over all features for expansion to their optimal degree
     for i, degree in enumerate(best_degrees):
+        # Initiate with degree 1
         poly = np.power(tx[:, i+1], 1)
         for deg in range(2, degree+1):
+            # Compute each degree
             poly = np.c_[poly, np.power(tx[:, i+1], deg)]
         new_tx = np.c_[new_tx, poly]
 
