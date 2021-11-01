@@ -4,6 +4,20 @@ import numpy as np
 def standardize(x):
     """
     Standardize input set according to mean and std.
+
+    Parameters
+    ----------
+    x : float array
+        input data set
+
+    Returns
+    -------
+    x : float array
+        standardized set
+    mean_x : float array
+        means of each column (i.e. each feature)
+    std_x : float array
+        standard deviation of each column (i.e. each feature)
     """
     mean_x = np.mean(x, axis=0)
     x = x - mean_x
@@ -15,6 +29,20 @@ def standardize(x):
 def build_model_data(x_std, y_data):
     """
     Build model, to be used by ML methods.
+
+    Parameters
+    ----------
+    x_std : float array
+        input dataset
+    y_data : binary array
+        output of the input dataset
+
+    Returns
+    -------
+    y : binary array
+        output of the input dataset (unchanged)
+    tx : float array
+        input dataset modified to be used by ML methods
     """
     y = y_data
     x = x_std
@@ -68,6 +96,18 @@ def replace_miss(x, method='mean'):
     """
     Replace missing values of each feature by the mean/median
     of the values of the feature.
+
+    Parameters
+    ----------
+    x : float array
+        input dataset
+    method : str
+        method to be used for missing values replacement
+
+    Returns
+    -------
+    x : float array
+        dataset with replaced missing values
     """
     if method == 'mean':
         # Replace -999 (=missing values) by NaN
@@ -97,9 +137,39 @@ def replace_miss(x, method='mean'):
 
 def preprocessing(x, y, test_x, test_y, method='mean', ratio=0.7):
     """
-    Preprocessing... (TO DO)
-    """
+    Preprocessing of the train and test set to split the train set, replace missing values,
+    standardize the dataset, and build the model.
 
+    Parameters
+    ----------
+    x : float array
+        train set
+    y : binary array
+        output of train set
+    test_x : float array
+        train set
+    test_y : binary array
+        output of train set
+    method : str
+        method to be used for missing values replacement
+    ratio : float
+        split ratio of the train set into a train and validation subset
+
+    Returns
+    -------
+    train_tx : float array
+        preprocessed train dataset
+    train_y : binary array
+        output of train dataset
+    val_tx : float array
+        preprocessed validation dataset
+    val_y : binary array
+        output of validation dataset
+    test_tx : float array
+        preprocessed test set
+    test_y : binary array
+        output of test set
+    """
     # Split the training dataset into a training and validation set
     train_x, train_y, val_x, val_y = split_data(x, y, ratio, seed=1)
 
