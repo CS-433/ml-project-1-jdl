@@ -82,7 +82,6 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     return w, loss
 
 
-# Least squares regression using normal equations
 def least_squares(y, tx):
     """
     Implementation of the least squares algorithm.
@@ -111,7 +110,6 @@ def least_squares(y, tx):
     return w, loss
 
 
-# Ridge regression using normal equations
 def ridge_regression(y, tx, lambda_=0.1):
     """
     Implementation of the ridge regression algorithm.
@@ -142,7 +140,6 @@ def ridge_regression(y, tx, lambda_=0.1):
     return w, loss
 
 
-# Logistic regression using gradient descent or SGD
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
     """
     Implementation of the logistic regression algorithm.
@@ -181,7 +178,6 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     return w, loss
 
 
-# Regularized logistic regression using gradient descent or SGD
 def reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma):
     """
     Implementation of the regularised logistic regression algorithm.
