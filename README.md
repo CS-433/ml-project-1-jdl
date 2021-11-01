@@ -4,30 +4,29 @@ This Project aims to find a solution for the popular machine learning challenge 
 
 ## Exploratory data analysis
 <ul>
-    <li>shape</li>
-    <li>type</li>
-    <li>first and last values of rows/columns</li>
-    <li>check for missing values</li>
-    <li>deal with missing values (suppression-subsitution-interpolation_...)</li>
-    <li>check for outliers (?)</li>
-    <li>feature engineering (standardization etc)</li>
-    <li>Pattern in data
+    <li>Training data: 250000 datapoint x 30 features + 250000 Predictions</li>
+    <li>Output variable: Binary Classification: 'b' and 's'</li>
+    <li>Missing values are indicated by -999. 11 features contains missing values</li>
+    <li>The Training data was divided into a training set and a validation set with a ratio of 0.7<\li>
+    <li>Features with more than 50% missing values were deleted. The other missing values were replaced by the mean of the remaining values of the feature in the training set.</li>
+    <li>The features were standardized using the mean and std of the training set</li>
+    <li>Pattern in data:
         <ul>
-            <li>univariate analysis (histogram). And we know that : 'Low variance features tend to contribute less to the prediction of outcome variable'.</li>
-            <li>correlation analysis (between features) using heatmaps -> we should eliminate correlated features (one feature from a correlated pair is dropped)</li>
-            <li>bivariate analysis. And we know that : ' If the relative variability is large, then it may be an indication of that these features could contribute to predicting the labels. '</li>
+            <li>univariate analysis (histogram and boxplots). To find features with uniform distributions that do not contribiute to the classification.</li>
+            <li>correlation analysis (between features) using heatmaps ->To find correlated features (one feature from a correlated pair is dropped)</li
         </ul>
     </li>
-    <li>feature selection : filter methods or wrapper methods?</li>
+    <li>feature selection : We dropped 13 features due to missing values, uniform distributions and correlation.</li>
 </ul>
 
 ## Code description
 <ul>
-    <li>project1.ipynb: main Jupyter Notebook. There, one can follow all the steps that were done.
-    <li>proj1_helpers.py.: File with important helper functions.
-    <li>implementations.py: File with the 6 linear optimization algorithms (least squares, GD, SGD, ridge regression, locistic regression and regularized logistic regression)
-    <li>data_processing.py: File with the functions that were used to process the data sets
-    <li>cross_validation.py: File with the functions that were used to perform the Cross Validations
+    <li>project1.ipynb: main Jupyter Notebook. There, one can follow all the steps that were done.</li>
+    <li>proj1_helpers.py.: File with important helper functions.</li>
+    <li>implementations.py: File with the 6 linear optimization algorithms (least squares, GD, SGD, ridge regression, locistic regression and regularized logistic regression)</li>
+    <li>data_processing.py: File with the functions that were used to process the data sets</li>
+    <li>cross_validation.py: File with the functions that were used to perform the Cross Validations</li>
+    <li>run.py: File that allows to reproduce our final submission.</li>
    
         
 </ul>
