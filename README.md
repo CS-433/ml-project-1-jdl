@@ -1,6 +1,6 @@
 # CS-433 Machine Learning - Project 1
 
-This Porject aims to find a solution for the popular machine learning challenge of finding the Higgs Boson. This is a binary classification task. Therefore a training set with 250000 data points and 30 features is provided as well as the test set (do not include the output variable). With several linear optimisation algorithms we tried to find accurate predictions. To go beyond those linear methods, polynomial feature expansion was implemented at the end.
+This Project aims to find a solution for the popular machine learning challenge of finding the Higgs Boson. This is a binary classification task. Therefore, a training set with 250000 data points and 30 features is provided as well as the test set (do not include the output variable). With several linear optimisation algorithms we tried to find accurate predictions. To go beyond those linear methods, polynomial feature expansion was implemented at the end.
 
 ## Exploratory data analysis
 <ul>
@@ -22,3 +22,12 @@ This Porject aims to find a solution for the popular machine learning challenge 
 </ul>
 
 ## Code description
+<ul>
+    <li>project1.ipynb: main Jupyter Notebook. There, one can follow all the steps that were done.
+    <li>proj1_helpers.py.: File with important helper functions.
+    <li>implementations.py: File with the 6 linear optimization algorithms (least squares, GD, SGD, ridge regression, locistic regression and regularized logistic regression)
+    <li>data_processing.py: File with the functions that were used to process the data sets
+    <li>cross_validation.py: File with the functions that were used to perform the Cross Validations
+   
+        
+</ul>
