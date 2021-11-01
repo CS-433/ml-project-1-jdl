@@ -1,11 +1,6 @@
-# CS-433 - Project 1
+# CS-433 Machine Learning - Project 1
 
-## TO DO
-<ul>
-    <li>report</li>
-    <li>run.py file</li>
-    <li>comment code</li>
-</ul>
+This Porject aims to find a solution for the popular machine learning challenge of finding the Higgs Boson. This is a binary classification task. Therefore a training set with 250000 data points and 30 features is provided as well as the test set (do not include the output variable). With several linear optimisation algorithms we tried to find accurate predictions. To go beyond those linear methods, polynomial feature expansion was implemented at the end.
 
 ## Exploratory data analysis
 <ul>
