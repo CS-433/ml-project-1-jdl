@@ -155,7 +155,8 @@ def accuracy(train_tx, train_y, val_tx, val_y, weights, print_ = True):
 
     return train_score, val_score
 
-#Functions to expand features to polynomials
+
+# Functions to expand features to polynomials
 def build_poly_tx(tx, idx, degree):
     """polynomial basis functions for input data x, for j=0 up to j=degree."""
     if degree == 0:
@@ -171,7 +172,8 @@ def build_poly_tx(tx, idx, degree):
                 poly = np.c_[poly, np.power(tx[:,i], deg)]
             new_tx = np.hstack((new_tx, poly))
         return new_tx
-    
+
+
 def build_final_poly_tx(tx, best_degrees):
     """xxx"""
     new_tx = np.ones((len(tx[:,0]),1))
