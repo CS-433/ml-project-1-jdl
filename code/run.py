@@ -30,7 +30,7 @@ train_tx, train_y, val_tx, val_y, test_tx, test_y = preprocessing(tX, y, tX_test
 # Cross validation parameter setting
 seed = 1
 k_fold = 5
-degrees = np.arange(11)
+degrees = np.arange(1, 11)
 features = np.arange(1, len(train_tx[0]))
 
 # Split data in k fold
